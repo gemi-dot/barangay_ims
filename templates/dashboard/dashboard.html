@@ -1,0 +1,297 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Barangay Information Management System{% endblock %}
+
+{% block page_title %}Dashboard Overview{% endblock %}
+
+{% block content %}
+<!-- Summary Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ total_residents }}</h4>
+                        <p class="card-text">Total Residents</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-people fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ total_households }}</h4>
+                        <p class="card-text">Total Households</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-house fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ senior_citizens }}</h4>
+                        <p class="card-text">Senior Citizens</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-person-wheelchair fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4 class="card-title">{{ fourps_beneficiaries }}</h4>
+                        <p class="card-text">4Ps Beneficiaries</p>
+                    </div>
+                    <div class="align-self-center">
+                        <i class="bi bi-cash-stack fs-1"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Demographics and BHW Reports Row -->
+<div class="row mb-4">
+    <!-- Demographics Chart -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-pie-chart"></i>
+                    Demographics by Gender
+                </h5>
+            </div>
+            <div class="card-body">
+                <canvas id="genderChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- BHW Reports Summary -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-clipboard-data"></i>
+                    BHW Reports Summary
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-6 mb-3">
+                        <h3 class="text-primary">{{ active_businesses }}</h3>
+                        <small class="text-muted">Active Businesses</small>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <h3 class="text-success">{{ active_pregnancies }}</h3>
+                        <small class="text-muted">Active Pregnancies</small>
+                    </div>
+                    <div class="col-6">
+                        <h3 class="text-info">{{ pwd_count }}</h3>
+                        <small class="text-muted">PWD Residents</small>
+                    </div>
+                    <div class="col-6">
+                        <h3 class="text-warning">{{ recent_health_reports }}</h3>
+                        <small class="text-muted">Recent Health Reports</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Age Groups and Zone Distribution -->
+<div class="row mb-4">
+    <!-- Age Groups -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-bar-chart"></i>
+                    Age Group Distribution
+                </h5>
+            </div>
+            <div class="card-body">
+                <canvas id="ageChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Zone Distribution -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-geo-alt"></i>
+                    Population by Zone
+                </h5>
+            </div>
+            <div class="card-body">
+                {% if zone_distribution %}
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Zone</th>
+                                    <th>Population</th>
+                                    <th>Percentage</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for zone in zone_distribution %}
+                                <tr>
+                                    <td>{{ zone.zone }}</td>
+                                    <td>{{ zone.count }}</td>
+                                    <td>{{ zone.percentage }}%</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <p class="text-muted">No zone data available</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title mb-0">
+                    <i class="bi bi-lightning"></i>
+                    Quick Actions
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2 col-sm-4 col-6 mb-3">
+                        <a href="{% url 'dashboard:residents_list' %}" class="btn btn-outline-primary w-100">
+                            <i class="bi bi-people d-block fs-3 mb-2"></i>
+                            View All Residents
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-6 mb-3">
+                        <a href="{% url 'admin:residents_resident_add' %}" class="btn btn-outline-success w-100">
+                            <i class="bi bi-person-plus d-block fs-3 mb-2"></i>
+                            Add New Resident
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-6 mb-3">
+                        <a href="{% url 'dashboard:senior_citizens_report' %}" class="btn btn-outline-info w-100">
+                            <i class="bi bi-person-wheelchair d-block fs-3 mb-2"></i>
+                            Senior Citizens
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-6 mb-3">
+                        <a href="{% url 'dashboard:businesses_report' %}" class="btn btn-outline-warning w-100">
+                            <i class="bi bi-shop d-block fs-3 mb-2"></i>
+                            Businesses
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-6 mb-3">
+                        <a href="{% url 'dashboard:fourps_report' %}" class="btn btn-outline-danger w-100">
+                            <i class="bi bi-cash-stack d-block fs-3 mb-2"></i>
+                            4Ps Reports
+                        </a>
+                    </div>
+                    <div class="col-md-2 col-sm-4 col-6 mb-3">
+                        <a href="{% url 'dashboard:pregnancy_report' %}" class="btn btn-outline-secondary w-100">
+                            <i class="bi bi-heart-pulse d-block fs-3 mb-2"></i>
+                            Pregnancies
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Gender Distribution Chart
+const genderCtx = document.getElementById('genderChart').getContext('2d');
+const genderChart = new Chart(genderCtx, {
+    type: 'pie',
+    data: {
+        labels: ['Male', 'Female'],
+        datasets: [{
+            data: [{{ male_residents }}, {{ female_residents }}],
+            backgroundColor: [
+                '#36A2EB',
+                '#FF6384'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                position: 'bottom',
+            }
+        }
+    }
+});
+
+// Age Group Distribution Chart
+const ageCtx = document.getElementById('ageChart').getContext('2d');
+const ageChart = new Chart(ageCtx, {
+    type: 'bar',
+    data: {
+        labels: ['Children (0-17)', 'Adults (18-59)', 'Seniors (60+)'],
+        datasets: [{
+            label: 'Population',
+            data: [{{ children }}, {{ adults }}, {{ seniors }}],
+            backgroundColor: [
+                '#4BC0C0',
+                '#36A2EB',
+                '#FF6384'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+</script>
+{% endblock %}
