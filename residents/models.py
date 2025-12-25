@@ -85,6 +85,7 @@ class Resident(models.Model):
     sss_gsis_number = models.CharField(max_length=20, blank=True)
     tin_number = models.CharField(max_length=20, blank=True)
     voters_id = models.CharField(max_length=20, blank=True)
+    precinct_number = models.CharField(max_length=20, blank=True)  # new field
     
     # Health and Special Categories
     is_pwd = models.BooleanField(default=False, verbose_name="Person with Disability")

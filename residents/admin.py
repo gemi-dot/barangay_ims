@@ -5,7 +5,7 @@ from .models import Resident, Household
 
 @admin.register(Resident)
 class ResidentAdmin(admin.ModelAdmin):
-    list_display = ['last_name', 'first_name', 'middle_name', 'age', 'gender', 'zone', 'is_senior_citizen', 'is_4ps_beneficiary', 'is_active']
+    list_display = ['voters_id', 'precinct_number', 'philhealth_number', 'sss_gsis_number', 'tin_number', 'last_name', 'first_name', 'middle_name', 'age', 'gender', 'zone', 'is_senior_citizen', 'is_4ps_beneficiary', 'is_active']
     list_filter = ['gender', 'civil_status', 'is_senior_citizen', 'is_4ps_beneficiary', 'is_pwd', 'zone', 'is_active']
     search_fields = ['first_name', 'last_name', 'middle_name', 'contact_number']
     list_editable = ['is_active']
