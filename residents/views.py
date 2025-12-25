@@ -32,7 +32,11 @@ def voters_precinct_dashboard(request):
         'data': data
     })
 
-
+def voters_report(request):
+    voters = Resident.objects.exclude(voters_id='').exclude(voters_id__isnull=True)
+    return render(request, 'residents/voters_report.html', {
+        'voters': voters
+    })
 
 def voters_by_precinct_report(request):
     voters = Resident.objects.filter(

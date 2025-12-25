@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Reports</title>
+    <title>Voters Reports</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -25,19 +25,19 @@
 </head>
 <body>
 
-<h1>Reports Dashboard</h1>
+<h1>Voters Report Dashboard</h1>
 
-<a href="{% url 'voters_report' %}" class="btn">
-    📄 Voters List (Simple)
-</a>
 
-<a href="{% url 'voters_by_precinct' %}" class="btn">
-    📊 Voters by Precinct
-</a>
 
-<a href="{% url 'voters_precinct_dashboard' %}" class="btn">
-    📈 Voters Dashboard (Chart)
-</a>
+
+
+<a href="{% url 'residents:voters_report' %}">📄 Voters List</a>
+<a href="{% url 'residents:voters_by_precinct' %}">📊 Voters by Precinct</a>
+<a href="{% url 'residents:voters_precinct_dashboard' %}">📈 Dashboard</a>
+
+
+
+
 
 </body>
 </html>
